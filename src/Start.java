@@ -3,7 +3,9 @@ public class Start {
 	
      public static void main(String[] args) {
     	 
-		//LoginFrame frame=new LoginFrame();
-		SignFrame frame=new SignFrame();
+		//LoginFrame loginFrame=new LoginFrame();
+		//SignFrame signFrame=new SignFrame();
+    	BookingFrame bookingFrame=new BookingFrame(); 
+    	 //PersonalFrame personalFrame=new PersonalFrame();
 	}
 }
