@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginFrame extends JFrame{
+public class LoginFrame extends JFrame{//登陆界面
    
 	
 	private Image background;
@@ -44,6 +44,7 @@ public class LoginFrame extends JFrame{
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
+		setResizable(false);//界面大小不可改变
 		
 		try {
 			background=ImageIO.read(new File("background.png"));
@@ -67,7 +68,7 @@ public class LoginFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				SignFrame signFrame=new SignFrame();
+				SignFrame signFrame=new SignFrame();//点击注册按钮进入注册界面进行注册
 				setVisible(false);
 				dispose();
 			}

@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class PrintFrame extends JFrame{
+public class PrintFrame extends JFrame{//打印机票信息界面
 	
 	private JPanel idPanel,userPanel,fligtPanel,startPanel,endPanel,classPanel,seatPanel,datePanel;
 	private JLabel idLabel,userLabel,fligtLabel,startLabel,endLabel,classLabel,seatLabel,dateLabel;
@@ -22,7 +22,7 @@ public class PrintFrame extends JFrame{
 		// TODO Auto-generated constructor stub
 		super("打印");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setResizable(false);
+		setResizable(false);//界面大小不可改变
 		
 		ticket_id=ticket.getTicket_id();
 		username=ticket.getUsername();
@@ -92,7 +92,7 @@ public class PrintFrame extends JFrame{
 		box.add(seatLabel);
 		
 		setSize(300,300);
-	    setLocationRelativeTo(null);
+	    setLocationRelativeTo(null);//使界面始终位于屏幕中央
 	    setVisible(true);
 		
 	}

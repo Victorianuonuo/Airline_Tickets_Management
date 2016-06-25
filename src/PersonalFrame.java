@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class PersonalFrame extends JFrame{
+public class PersonalFrame extends JFrame{//个人信息界面
 	
 	private JLabel usernameLabel,balanceLabel,idLabel;
 	private JLabel username,balance,id;
@@ -20,7 +20,7 @@ public class PersonalFrame extends JFrame{
 		// TODO Auto-generated constructor stub
 		super("个人信息");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setResizable(false);
+		setResizable(false);//界面大小不可改变
 
 		container =getContentPane();
 		box=new Box(BoxLayout.Y_AXIS);
@@ -55,7 +55,7 @@ public class PersonalFrame extends JFrame{
 
 	   // pack();
 	    setSize(300,300);
-	    setLocationRelativeTo(null);
+	    setLocationRelativeTo(null);//使界面始终位于屏幕中央
 	    setVisible(true);
 	}
 	

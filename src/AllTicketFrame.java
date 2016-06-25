@@ -14,7 +14,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-public class AllTicketFrame extends JFrame{
+public class AllTicketFrame extends JFrame{//显示该用户的所有订单状态
 	
 	private DefaultListModel<Ticket> model;
     final JList<Ticket> list;
@@ -26,13 +26,13 @@ public class AllTicketFrame extends JFrame{
 		// TODO Auto-generated constructor stub
 		super("已订机票");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setResizable(false);
+		setResizable(false);//界面大小不可改变
 		setLayout(new BorderLayout());
 		
 		model= new DefaultListModel<Ticket>();
     	list=new JList<Ticket>(model);
     	list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    	list.addListSelectionListener(new ListSelectionListener() {
+    	list.addListSelectionListener(new ListSelectionListener() {//选择列表中的某个订单进行打印
 			
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -60,15 +60,15 @@ public class AllTicketFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if(tk!=null){
-					PrintFrame printFrame=new PrintFrame(tk);
+					PrintFrame printFrame=new PrintFrame(tk);//显示打印订单界面
 				}
 			}
 		});
     	add(printPanel, BorderLayout.EAST);
     	
     	setSize(300, 300);
-    	setResizable(false);
-    	setLocationRelativeTo(null);
+    	setResizable(false);//界面大小不可改变
+    	setLocationRelativeTo(null);//界面一直位于屏幕中央
     	setVisible(true);
 	}
 	

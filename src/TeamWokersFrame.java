@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class TeamWokersFrame extends JFrame{
+public class TeamWokersFrame extends JFrame{//团队信息界面
 	
 	private Container container;
 	private Box box;
@@ -46,8 +46,8 @@ public class TeamWokersFrame extends JFrame{
 	
 		setSize(300, 300);
 		setVisible(true);
-		setLocationRelativeTo(null);
-		setResizable(false);
+		setLocationRelativeTo(null);//使界面始终位于屏幕中央
+		setResizable(false);//界面大小不可改变
 		setAlwaysOnTop(true);
 	}
 

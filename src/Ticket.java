@@ -3,13 +3,13 @@ import java.sql.ResultSet;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Ticket {
+public class Ticket {//用于显示查询时的订单状态
 	
 	private String ticket_id,username,flight,start,end,date,flight_class,seat,price;
 	
 	
 
-	public Ticket(ResultSet temp) {
+	public Ticket(ResultSet temp) {//由从数据库中取出的信息进行构造
 		// TODO Auto-generated constructor stub
 		
 		

@@ -23,11 +23,11 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class BookingFrame extends JFrame {
+public class BookingFrame extends JFrame {//查询订票界面
      
 	private JMenu personalMenu,helpMenu;
 	private DefaultListModel<Flight> model;
-    final JList<Flight> list;
+    final JList<Flight> list;//用于显示查询所得到的机票结果 
 	private JMenuBar menuBar;
 	private JPanel numberPanel,desPanel,idPanel;
 	private JMenuItem infoItem,ticketItem,tipItem,exitItem;
@@ -43,8 +43,8 @@ public class BookingFrame extends JFrame {
 			               "2016-7-16","2016-7-17","2016-7-18","2016-7-19","2016-7-20",
 			               "2016-7-21","2016-7-22","2016-7-23","2016-7-24","2016-7-25",
 			               "2016-7-26","2016-7-27","2016-7-28","2016-7-29","2016-7-30",
-	};
-	private String[] flight_classes={"first","economy","business"};
+	};//只能查询和预定30天之内的飞机票
+	private String[] flight_classes={"first","economy","business"};//飞机三个不同舱位：头等舱，经济舱，商务舱
 	private boolean selected=false;
 	private String date="2016-7-1",flight_class="first";
 	
@@ -70,7 +70,7 @@ public class BookingFrame extends JFrame {
         infoItem.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {//点击菜单中的个人信息栏时将新建一个PersonalFrame来显示该用户所有信息
 				// TODO Auto-generated method stub
 				PersonalFrame personalFrame=new PersonalFrame();
 			}
@@ -81,7 +81,7 @@ public class BookingFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				AllTicketFrame allTicketFrame=new AllTicketFrame();
+				AllTicketFrame allTicketFrame=new AllTicketFrame();//点击菜单中的订票信息栏时将新建一个AllTicketFrame来显示该用户所订机票的所有信息
 			}
 		});
         
@@ -90,13 +90,13 @@ public class BookingFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				TeamWokersFrame teamWokersDialog=new TeamWokersFrame();
+				TeamWokersFrame teamWokersDialog=new TeamWokersFrame();//点击菜单中的关于栏时将新建一个TeamWokersFrame来显示团队信息
 			}
 		});
         exitItem.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {//点击菜单中的退出栏时将回到登陆界面
 				// TODO Auto-generated method stub
 				LoginFrame loginFrame=new LoginFrame();
 				setVisible(false);
@@ -120,7 +120,7 @@ public class BookingFrame extends JFrame {
 		numberButton.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {//选中按航班号查找按钮
 				// TODO Auto-generated method stub
 				numberButton.setSelected(true);
 				desButton.setSelected(false);
@@ -130,7 +130,7 @@ public class BookingFrame extends JFrame {
 		desButton.addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {//选中按地点查找按钮
 				// TODO Auto-generated method stub
 				desButton.setSelected(true);
 				numberButton.setSelected(false);
@@ -208,7 +208,7 @@ public class BookingFrame extends JFrame {
 		datesBox.addItemListener(new ItemListener() {
 			
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void itemStateChanged(ItemEvent e) {//在下拉栏中选择不同的时间将改变所选中的时间
 				// TODO Auto-generated method stub
 				date= (String)datesBox.getSelectedItem();
 				
@@ -217,7 +217,7 @@ public class BookingFrame extends JFrame {
 		classBox.addItemListener(new ItemListener() {
 			
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void itemStateChanged(ItemEvent e) {//在下拉栏中选择不同的舱位将改变所选中的舱位
 				// TODO Auto-generated method stub
 				flight_class=(String)classBox.getSelectedItem();
 			}
@@ -329,8 +329,8 @@ public class BookingFrame extends JFrame {
 		
 		
 		pack();
-		setLocationRelativeTo(null);
-		setResizable(false);
+		setLocationRelativeTo(null);//使界面始终位于屏幕中央
+		setResizable(false);//界面大小不可改变
 		setVisible(true);
 		
 	}

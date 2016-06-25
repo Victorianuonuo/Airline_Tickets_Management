@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class SignFrame extends JFrame{
+public class SignFrame extends JFrame{//注册界面
 	
 	private Container container;
 	private Box box;
@@ -62,6 +62,7 @@ public class SignFrame extends JFrame{
 		box.add(p5);
 		
 		setSize(500, 300);
+		setResizable(false);//界面大小不可改变
 		//pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
