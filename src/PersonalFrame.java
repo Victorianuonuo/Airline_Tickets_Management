@@ -19,8 +19,7 @@ public class PersonalFrame extends JFrame{
 	public PersonalFrame() {
 		// TODO Auto-generated constructor stub
 		super("个人信息");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);
 
 		container =getContentPane();
@@ -56,6 +55,7 @@ public class PersonalFrame extends JFrame{
 
 	   // pack();
 	    setSize(300,300);
+	    setLocationRelativeTo(null);
 	    setVisible(true);
 	}
 	

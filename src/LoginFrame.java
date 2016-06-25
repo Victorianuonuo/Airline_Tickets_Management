@@ -3,6 +3,8 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
@@ -39,7 +41,7 @@ public class LoginFrame extends JFrame{
 	public LoginFrame() {
 		// TODO Auto-generated constructor stub
 		super("Welcome!");
-		setLocationRelativeTo(null);
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
 		
@@ -60,6 +62,16 @@ public class LoginFrame extends JFrame{
 		userText=new JTextField(10);
 		pwdText=new JPasswordField(10);
 	    
+		signButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				SignFrame signFrame=new SignFrame();
+				setVisible(false);
+				dispose();
+			}
+		});
 		
 		centerPanel=new JPanel();
 		centerPanel.setLayout(new GridLayout(3, 1));
@@ -83,6 +95,7 @@ public class LoginFrame extends JFrame{
 		
 		add(loginPanel,BorderLayout.EAST);
 		pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 		
 		

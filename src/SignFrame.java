@@ -23,7 +23,7 @@ public class SignFrame extends JFrame{
 		// TODO Auto-generated constructor stub
 		super("зЂВс");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		
 		
 		container =getContentPane();
 		box=new Box(BoxLayout.Y_AXIS);
@@ -63,6 +63,7 @@ public class SignFrame extends JFrame{
 		
 		setSize(500, 300);
 		//pack();
+		setLocationRelativeTo(null);
 		setVisible(true);
 		
 	}
