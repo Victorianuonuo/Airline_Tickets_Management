@@ -20,17 +20,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class LoginFrame extends JFrame{//登陆界面
+public class LoginFrame extends JFrame implements CheckString{//登陆界面
    
 	
 	private Image background;
 	
-	static final String JDBC_DRIVER="com.mysql.jdbc.Driver";
-    static final String DB_URL="jdbc:mysql://localhost:3306/JDBC_SC";
+	static final String driver="com.mysql.jdbc.Driver";
+    static final String url="jdbc:mysql://localhost:3306/foo";
     
-    private String username;
-	private String pwd;
-	static Connection connection=null;
+    private String username="root";
+	private String pwd="victoria";
 	
 	private JLabel backLabel,userLabel,pwdLabel;
 	private JPanel centerPanel,loginPanel;
@@ -74,6 +73,21 @@ public class LoginFrame extends JFrame{//登陆界面
 			}
 		});
 		
+		loginButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				DataBase db=new DataBase(driver, url, username, pwd);
+				String user=checkS(userText.getText());
+				String pwd2=checkS(pwdText.getPassword().toString());
+				String sql="select * "+ "from account "
+						   + "where account_name = '" + user 
+						   +"' and account_password = '" + pwd2 +"'; ";
+				db.query(sql);
+			}
+		});
+		
 		centerPanel=new JPanel();
 		centerPanel.setLayout(new GridLayout(3, 1));
 		JPanel p1,p2,p3;
@@ -102,7 +116,11 @@ public class LoginFrame extends JFrame{//登陆界面
 		
 	}
 	
-	
+	@Override
+		public String checkS(String s) {
+			// TODO Auto-generated method stub
+		    return s.replaceAll(".*([';]+|(--)+).*", " ").trim();
+		}
 	
 	
 }

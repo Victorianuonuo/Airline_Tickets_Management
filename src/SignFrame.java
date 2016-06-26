@@ -1,4 +1,6 @@
 import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -9,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-public class SignFrame extends JFrame{//注册界面
+public class SignFrame extends JFrame implements CheckString{//注册界面
 	
 	private Container container;
 	private Box box;
@@ -18,6 +20,12 @@ public class SignFrame extends JFrame{//注册界面
 	private JLabel userLabel,pwdLabel,pwdLabel2,idLabel,tipLabel;
 	private JPanel p1,p2,p3,p4,p5;
 	private JButton submitButton;
+	
+	static final String driver="com.mysql.jdbc.Driver";
+    static final String url="jdbc:mysql://localhost:3306/foo";
+    
+    private String username="root";
+	private String pwd="victoria";
 
 	public SignFrame() {
 		// TODO Auto-generated constructor stub
@@ -39,6 +47,14 @@ public class SignFrame extends JFrame{//注册界面
 		idLabel=new   JLabel("身份证号： ");
 		tipLabel=new JLabel("          ");
 		submitButton=new JButton("    提交   ");
+		submitButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		p1=new JPanel();
 		p1.add(userLabel);
@@ -69,5 +85,11 @@ public class SignFrame extends JFrame{//注册界面
 		
 	}
 	
+	@Override
+	public String checkS(String s) {
+		// TODO Auto-generated method stub
+	    return s.replaceAll(".*([';]+|(--)+).*", " ").trim();
+	}
+
 	
 }

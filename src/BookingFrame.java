@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Vector;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
@@ -22,8 +23,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.xml.crypto.Data;
 
-public class BookingFrame extends JFrame {//查询订票界面
+public class BookingFrame extends JFrame implements CheckString{//查询订票界面
      
 	private JMenu personalMenu,helpMenu;
 	private DefaultListModel<Flight> model;
@@ -47,6 +49,12 @@ public class BookingFrame extends JFrame {//查询订票界面
 	private String[] flight_classes={"first","economy","business"};//飞机三个不同舱位：头等舱，经济舱，商务舱
 	private boolean selected=false;
 	private String date="2016-7-1",flight_class="first";
+	
+	static final String driver="com.mysql.jdbc.Driver";
+    static final String url="jdbc:mysql://localhost:3306/foo";
+    
+    private String username="root";
+	private String pwd="victoria";
 	
 	
 	public BookingFrame() {
@@ -161,22 +169,33 @@ public class BookingFrame extends JFrame {//查询订票界面
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(selected==false){
+				String sql="";
+				if(selected==false){//查询，输入flight-id, date，返回ResultSet
 					String t1=numberText.getText();
-					String safe=t1.replaceAll(".*([';]+|(--)+).*", " ").trim();
+					String safe=checkS(t1);
 					System.err.println(safe);
 					if(safe!=null){
+						sql="select * "+ "from flight_query "
+								   + "where flight_id = '" + t1 
+								   + "' and flight_date = cast '" + date + "' as date; ";
 						
 					}
-				}else {
+				}else {//查询，输入起点，重点，date
 					String t1=startText.getText(),t2=endText.getText();
-					String s1=t1.replaceAll(".*([';]+|(--)+).*", " ").trim();
-					String s2=t2.replaceAll(".*([';]+|(--)+).*", " ").trim();
+					String s1=checkS(t1);
+					String s2=checkS(t2);
 					System.err.println(s1+" | "+s2);
 					if(s1!=null&&s2!=null){
-						
+						sql="select * "+ "from flight_query "
+								   + "where start_point = '" + s1
+								   + "' and end_point = '" + s2 + 
+								   "' and flight_date = cast '" + date 
+								   + "' as date; ";
 					}
 				}
+				DataBase db=new DataBase(driver, url, username, pwd);
+				Vector<Vector<String>> res=db.query(sql);
+				
 			}
 		});
 		
@@ -186,10 +205,10 @@ public class BookingFrame extends JFrame {//查询订票界面
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String t1=idText.getText();
-				String s1=t1.replaceAll(".*([';]+|(--)+).*", " ").trim();
+				String s1=checkS(t1);
 				System.err.println(s1);
 				if(t1!=null){
-					
+				
 				}
 			}
 		});
@@ -334,5 +353,12 @@ public class BookingFrame extends JFrame {//查询订票界面
 		setVisible(true);
 		
 	}
+	
+	@Override
+	public String checkS(String s) {
+		// TODO Auto-generated method stub
+	    return s.replaceAll(".*([';]+|(--)+).*", " ").trim();
+	}
+
 	
 }
