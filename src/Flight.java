@@ -1,10 +1,11 @@
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 public class Flight {//用于显示查询时的航班状态
 	
 	private String flight,start,end,date,price,left;
 
-	public Flight(ResultSet temp) {//由从数据库中取出的信息进行构造
+	public Flight(ArrayList<String> temp) {//由从数据库中取出的信息进行构造
 		// TODO Auto-generated constructor stub
 		
 	}

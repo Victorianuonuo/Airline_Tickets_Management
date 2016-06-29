@@ -25,7 +25,7 @@ public class TeamWokersFrame extends JFrame{//团队信息界面
 		container.add(box);
 		
 		teamworkersLabel=new JLabel("Team: 欧阳思琪，郑伟昊，周立博，万欣宇");
-		aimLabel=new JLabel("Aim: 数据库大作业");
+		aimLabel=new JLabel("For: 数据库大作业");
 		nameLabel=new JLabel("Name: Airline_Tickets_Management");
 		
 		p1=new JPanel();

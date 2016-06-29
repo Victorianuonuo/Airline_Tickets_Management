@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -56,10 +57,13 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
     private String username="root";
 	private String pwd="victoria";
 	
+	private String user;
 	
-	public BookingFrame() {
+	
+	public BookingFrame(String user) {
 		// TODO Auto-generated constructor stub
 		super("订票");
+		this.user=user;
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridBagLayout());
@@ -80,7 +84,7 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 			@Override
 			public void actionPerformed(ActionEvent e) {//点击菜单中的个人信息栏时将新建一个PersonalFrame来显示该用户所有信息
 				// TODO Auto-generated method stub
-				PersonalFrame personalFrame=new PersonalFrame();
+				PersonalFrame personalFrame=new PersonalFrame(user);
 			}
 		});
         
@@ -178,7 +182,6 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 						sql="select * "+ "from flight_query "
 								   + "where flight_id = '" + t1 
 								   + "' and flight_date = cast '" + date + "' as date; ";
-						
 					}
 				}else {//查询，输入起点，重点，date
 					String t1=startText.getText(),t2=endText.getText();
@@ -194,8 +197,14 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 					}
 				}
 				DataBase db=new DataBase(driver, url, username, pwd);
-				Vector<Vector<String>> res=db.query(sql);
-				
+				ArrayList<ArrayList<String>> res=db.query(sql);
+				model.removeAllElements();
+				if(res!=null){
+					for(ArrayList<String> tmp:res){
+						Flight flight=new Flight(tmp);
+						model.addElement(flight);
+					}
+				}
 			}
 		});
 		
@@ -208,7 +217,45 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 				String s1=checkS(t1);
 				System.err.println(s1);
 				if(t1!=null){
-				
+					DataBase db=new DataBase(driver, url, user,pwd);
+					String sql1="select " + flight_class + "_price as price "
+							   + "from flight "+ "where flight_id = '" 
+							   + s1 + "' and flight_date = cast '" + date 
+							   +"' as date and " + flight_class + "_left > 0; ";
+					ArrayList<ArrayList<String>> res=db.query(sql1);
+					if(res==null){
+						InfoDialog dialog=new InfoDialog(BookingFrame.this);
+						dialog.setText("没有此次航班!");
+						dialog.setVisible(true);
+					}else {
+						Flight flight=new Flight(res.get(0));
+						String sql2="update account "+ "set balance = balance - " 
+					         + flight.getPrice() + " "+ "where account_name = '" 
+							 + user + "'; ";
+						String sql3="update flight "+ "set " + flight_class + "_left = " 
+							        + flight_class + "_left - 1 "+ "where flight_id = '" 
+								    + s1 + "' and flight_date = cast '" + date +"' as date;";
+						String sql4="insert into ticket(booking_reference, passanger_name, flight_id, flight_date, seat_type) "
+							    + "values ('" +" GUID() "+ "', '" + user + "', '" + s1 + "', '" + date + "', '" + flight_class + "'); ";
+//GUID()????????
+						int col1=0,col2=0,col3=0;
+						col1=db.update(sql2);
+						if(col1!=0){
+							col2=db.update(sql3);
+							if(col2!=0){
+								col3=db.update(sql4);
+							}
+						}
+						if(col1!=0&&col2!=0&&col3!=0){
+							InfoDialog dialog=new InfoDialog(BookingFrame.this);
+							dialog.setText("预订成功!");
+							dialog.setVisible(true);
+						}else{
+							InfoDialog dialog=new InfoDialog(BookingFrame.this);
+							dialog.setText("预订失败！");
+							dialog.setVisible(true);
+						}
+					}
 				}
 			}
 		});

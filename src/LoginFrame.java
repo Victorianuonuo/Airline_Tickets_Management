@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.GridLayout;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.imageio.ImageIO;
@@ -31,7 +33,7 @@ public class LoginFrame extends JFrame implements CheckString{//登陆界面
     private String username="root";
 	private String pwd="victoria";
 	
-	private JLabel backLabel,userLabel,pwdLabel;
+	private JLabel backLabel,userLabel,pwdLabel,tipLabel;
 	private JPanel centerPanel,loginPanel;
 	private JButton loginButton,signButton;
 	private JTextField userText;
@@ -49,7 +51,7 @@ public class LoginFrame extends JFrame implements CheckString{//登陆界面
 			background=ImageIO.read(new File("background.png"));
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.err.println("nani  ");
+			System.err.println("can't load the backgroud image");
 		}
 		backLabel=new JLabel(new ImageIcon(background));
 		add(backLabel,BorderLayout.WEST);
@@ -57,6 +59,7 @@ public class LoginFrame extends JFrame implements CheckString{//登陆界面
 		
 		userLabel=new JLabel("用户名：   ");
 		pwdLabel=new JLabel("密码：        ");
+		tipLabel=new JLabel("欢迎使用");
 		loginButton=new JButton(" 登录 ");
 		signButton=new JButton(" 注册 ");
 		userText=new JTextField(10);
@@ -68,8 +71,6 @@ public class LoginFrame extends JFrame implements CheckString{//登陆界面
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				SignFrame signFrame=new SignFrame();//点击注册按钮进入注册界面进行注册
-				setVisible(false);
-				dispose();
 			}
 		});
 		
@@ -84,29 +85,42 @@ public class LoginFrame extends JFrame implements CheckString{//登陆界面
 				String sql="select * "+ "from account "
 						   + "where account_name = '" + user 
 						   +"' and account_password = '" + pwd2 +"'; ";
-				db.query(sql);
+				ArrayList<ArrayList<String>> res=db.query(sql);
+				if(res!=null){
+					BookingFrame bookingFrame=new BookingFrame(user); 
+	                setVisible(false);
+	                dispose();
+				}else{
+					tipLabel.setText("请输入正确的用户名和密码");
+				}
 			}
 		});
 		
 		centerPanel=new JPanel();
 		centerPanel.setLayout(new GridLayout(3, 1));
-		JPanel p1,p2,p3;
+		JPanel p1,p2,p3,p4;
 		p1=new JPanel();
 		p2=new JPanel();
 		p3=new JPanel();
+		p4=new JPanel();
 		p1.add(userLabel);
 		p1.add(userText);
 		p2.add(pwdLabel);
 		p2.add(pwdText);
 		p3.add(loginButton);
 		p3.add(signButton);
+		p4.setLayout(new BorderLayout());
+		tipLabel.setForeground(Color.red);
+		tipLabel.setHorizontalAlignment(JLabel.CENTER);
+		p4.add(tipLabel,BorderLayout.CENTER);
+		p4.add(new JLabel("                  Powered By RUC"), BorderLayout.SOUTH);
 		centerPanel.add(p1);
 		centerPanel.add(p2);
 		centerPanel.add(p3);
 		loginPanel=new JPanel();
 		loginPanel.setLayout(new BorderLayout());
 		loginPanel.add(centerPanel,BorderLayout.NORTH);
-		loginPanel.add(new JLabel("                  Powered By RUC"), BorderLayout.SOUTH);
+		loginPanel.add(p4);
 		
 		add(loginPanel,BorderLayout.EAST);
 		pack();

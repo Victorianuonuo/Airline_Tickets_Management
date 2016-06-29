@@ -1,9 +1,11 @@
+import java.awt.List;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class DataBase {
@@ -24,7 +26,7 @@ public class DataBase {
 	}
 	
 	
-	public Vector<Vector<String>> query(String sql ){//执行数据查询的SELECT语句，参数sql指定一条SELECT语句，执行成功显示结果集中的数据
+	public ArrayList<ArrayList<String>> query(String sql ){//执行数据查询的SELECT语句，参数sql指定一条SELECT语句，执行成功显示结果集中的数据
 		
 		PreparedStatement preparedStatement;
 		
@@ -32,9 +34,9 @@ public class DataBase {
     		 preparedStatement=(PreparedStatement)connection.prepareStatement(sql);
     		 ResultSet rs = preparedStatement.executeQuery();
     		 int col = rs.getMetaData().getColumnCount();
-    		 Vector<Vector<String >> re=new Vector<>();
+    		 ArrayList<ArrayList<String>> re=new ArrayList<>();
     		 while(rs.next()){
-    			Vector<String> tmp=new Vector<>();
+    			 ArrayList<String> tmp=new ArrayList<>();
  				for (int i = 1; i <= col; i++) {
  	                tmp.add(rs.getString(i));
  	             }
@@ -97,6 +99,6 @@ public class DataBase {
 		}
     }
 	
-
+    
 
 }

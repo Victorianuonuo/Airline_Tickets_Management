@@ -5,7 +5,7 @@ public class Start {
     	 
 		//LoginFrame loginFrame=new LoginFrame();
 		//SignFrame signFrame=new SignFrame();
-    	BookingFrame bookingFrame=new BookingFrame(); 
+    	BookingFrame bookingFrame=new BookingFrame("233"); 
     	 //PersonalFrame personalFrame=new PersonalFrame();
 	}
 }

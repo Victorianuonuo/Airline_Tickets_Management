@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,7 +15,7 @@ import javax.swing.JTextField;
 
 public class PersonalFrame extends JFrame implements CheckString{//个人信息界面
 	
-	private JLabel usernameLabel,balanceLabel,idLabel,chargeLabel;
+	private JLabel usernameLabel,balanceLabel,idLabel,chargeLabel,tipLabel;
 	private JLabel username,balance,id;
 	private JPanel p1,p2,p3,p4,p5;
 	private Container container;
@@ -45,6 +46,9 @@ public class PersonalFrame extends JFrame implements CheckString{//个人信息界面
 	    balanceLabel=new JLabel("余额： ");
 	    idLabel=new JLabel("身份证号： ");
 	    chargeLabel=new JLabel("充值金额： ");
+	    tipLabel=new JLabel("输入正整数金额充值");
+	    tipLabel.setForeground(Color.red);
+	    tipLabel.setHorizontalAlignment(JLabel.CENTER);
 		
 	    username=new JLabel("233");
 	    balance=new JLabel("233");
@@ -65,7 +69,8 @@ public class PersonalFrame extends JFrame implements CheckString{//个人信息界面
 				// TODO Auto-generated method stub
 				String t=charge.getText();
 				String s=checkS(t);
-				if(s!=null){
+				System.err.println(s);
+				if(!s.equals("")&&s!=null){
 					if(Integer.parseInt(s) <= 0) {
 						System.err.println("number <= 0");
 						return ;
@@ -76,9 +81,13 @@ public class PersonalFrame extends JFrame implements CheckString{//个人信息界面
 					DataBase db=new DataBase(driver, url, dba, pwd);
 					int flag=db.update(sql);
 					if(flag!=0){
-						t=Double.parseDouble(s)+Integer.parseInt(s)+"";
+						t=Integer.parseInt(s)+Integer.parseInt(s)+"";
 						balance.setText(t);
+					}else{
+						tipLabel.setText("充值失败，请输入正整数");
 					}
+				}else {
+					tipLabel.setText("充值失败，请输入正整数");
 				}
 			}
 		});
@@ -91,7 +100,7 @@ public class PersonalFrame extends JFrame implements CheckString{//个人信息界面
 	    p3.add(id);
 	    p5.add(chargeLabel);
 	    p5.add(charge);
-	    p4.add(new JLabel());
+	    p4.add(tipLabel);
 	    
 	    
 	    box.add(p4);
