@@ -79,6 +79,7 @@ public class LoginFrame extends JFrame implements CheckString{//µÇÂ½½çÃæ
 				System.err.println(alias+"|"+pwd2);
 				SQL sql=new SQL();
 				sql.select("*","passenger","passenger_alias = '" + alias +"' and passenger_password = '" + pwd2 +"'");
+				System.err.println(sql.toString());
 				ArrayList<ArrayList<String>> res=db.query(sql.toString());
 				for(ArrayList<String> tmp:res)
 				{

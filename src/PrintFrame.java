@@ -34,6 +34,7 @@ public class PrintFrame extends JFrame{//打印机票信息界面
 				, " ticket "
 				, " booking_reference = " + Integer.parseUnsignedInt(ticket_id,36)+ " ");
 		ArrayList<ArrayList<String>> res=db.query(sql.toString());
+		System.err.println(sql.toString());
 		PrintTicket ticket=new PrintTicket(res.get(0));
 		
 		company=ticket.getCompany();

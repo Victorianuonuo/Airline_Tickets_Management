@@ -82,6 +82,7 @@ public class UnprintedTicketFrame extends JFrame{//显示该用户的所有订单状态
 		sql.select("booking_reference, flight_id, flight_date, class_name, worth "
 				, " ticket_query "," true ");
 		DataBase db=new DataBase();
+		System.err.println(sql.toString());
 		ArrayList<ArrayList<String>> res=db.query(sql.toString());
 		for(ArrayList<String> tmp:res){
 			UnprintedTicket unprintedTicket=new UnprintedTicket(tmp);

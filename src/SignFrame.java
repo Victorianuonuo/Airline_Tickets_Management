@@ -81,6 +81,7 @@ public class SignFrame extends JFrame implements CheckString{//注册界面
 					sql.insert("passenger(passenger_id, passenger_alias, passenger_password, passenger_name)",
 						"values ( '" + id_check +"', '" + alias_check + "', '" + pwd_check +"', '" + user_check + "')");
 					DataBase db=new DataBase();
+					System.err.println(sql.toString());
 					int col=db.update(sql.toString());
 					if(col!=-1){
 						tipLabel.setText("注册成功！");

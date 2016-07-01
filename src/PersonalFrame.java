@@ -94,6 +94,7 @@ public class PersonalFrame extends JFrame implements CheckString{//个人信息界面
 					sql.update("passenger",
 							"balance = balance + " + Integer.parseInt(s),
 							"passenger_id = '" + user + "'");
+					System.err.println(sql.toString());
 					DataBase db=new DataBase();
 					int flag=db.update(sql.toString());
 					if(flag!=-1){

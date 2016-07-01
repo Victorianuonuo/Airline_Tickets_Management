@@ -203,6 +203,7 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 						sql.select("price, remain",
 								"class_book_query",
 								"flight_id = '" + tmp.get(0) + "' and flight_date = cast('" + date + "' as date)","  class_name ");
+						System.err.println(sql.toString());
 						ArrayList<ArrayList<String>> res2=db.query(sql.toString());
 						System.err.println(res2);
 						ArrayList<String> tmp2=new ArrayList<>();
@@ -234,6 +235,7 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 							, "class_book_query "
 							, "flight_id = '" + s1 + "' and flight_date = cast('" + date +"' as date ) and class_name = '" + flight_class + "' and remain > 0 ");
 					DataBase db=new DataBase();
+					System.err.println(sql.toString());
 					ArrayList<ArrayList<String>> tmp=db.query(sql.toString());
 					System.err.println(tmp);
 					if(tmp!=null){
@@ -241,15 +243,18 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 						sql.update("passenger "
 								,"set balance = balance - " + tmp.get(0).get(0) + " "
 								,"where passenger_name = '" + s1 + "' ");
+						System.err.println(sql.toString());
 						int r1=db.update(sql.toString());
 						if(r1!=-1){
 							sql.update("flight_class "
 									, "set remain = remain - 1 "
 									, "where flight_id = '" + s1 + "' and flight_date = cast('" + date +"' as date) and class_name = '" + flight_class + "' ");
+							System.err.println(sql.toString());
 							int r2=db.update(sql.toString());
 							if(r2!=-1){
 								sql.insert("ticket(passanger_id, flight_id, flight_date, class_name, worth) "
 									       ,"values ('" + BookingFrame.this.user_id + "', '" + s1 + "', '" + date + "', '" + flight_class + "', '" +tmp.get(0).get(0) + "') ");
+								System.err.println(sql.toString());
 								int r3=db.update(sql.toString());
 								if(r3!=-1){
 									showDialog("预定成功！请在起飞前打印机票！");
