@@ -190,7 +190,7 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 					if(s1!=null&&s2!=null){
 						sql.select("flight_id, flight_date, start_port, end_port, start_time, end_time",
 								"flight_book_query",
-								"start_port = '" + s1 + "' and end_port = '" + s2 + "' and flight_date = cast '" + date + "' as date");
+								"start_port = '" + s1 + "' and end_port = '" + s2 + "' and flight_date = cast( '" + date + "' as date)");
 					}
 				}
 				DataBase db=new DataBase();
@@ -209,11 +209,17 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 						ArrayList<String> tmp2=new ArrayList<>();
 						for(String tmp4:tmp)
 							tmp2.add(tmp4);
+					    int ct=0;
 						for(ArrayList<String> tmp3:res2){
 							System.err.println(tmp3);
 							for(String tmp5:tmp3)
+							{
 								tmp2.add(tmp5);
+								++ct;
+							}		
 						}
+						for(;ct<=6;ct++)
+							tmp2.add(" ");
 						Flight flight=new Flight(tmp2);
 						model.addElement(flight);
 					}
@@ -233,43 +239,50 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 					SQL sql=new SQL();
 					sql.select("price "
 							, "class_book_query "
-							, "flight_id = '" + s1 + "' and flight_date = cast('" + date +"' as date ) and class_name = '" + flight_class + "' and remain > 0 ");
+							, "flight_id = '" + s1 + "' and flight_date = cast('" + date +"' as date ) and class_name = '" + flight_class.charAt(0) + "' and remain > 0 ");
 					DataBase db=new DataBase();
 					System.err.println(sql.toString());
 					ArrayList<ArrayList<String>> tmp=db.query(sql.toString());
 					System.err.println(tmp);
-					if(tmp!=null){
-	
-						sql.update("passenger "
-								,"set balance = balance - " + tmp.get(0).get(0) + " "
-								,"where passenger_name = '" + s1 + "' ");
-						System.err.println(sql.toString());
-						int r1=db.update(sql.toString());
-						if(r1!=-1){
-							sql.update("flight_class "
-									, "set remain = remain - 1 "
-									, "where flight_id = '" + s1 + "' and flight_date = cast('" + date +"' as date) and class_name = '" + flight_class + "' ");
+					try{
+						if(tmp!=null){
+							sql.select( " balance " ," passenger ", " passenger_id = '"+ user +"'");
+							ArrayList<ArrayList<String>> ans=db.query(sql.toString());
+							if(Double.parseDouble(ans.get(0).get(0))!=0)
+							sql.update("passenger "
+									," balance = balance - " + tmp.get(0).get(0) + " "
+									," passenger_id = '" + user + "' ");
 							System.err.println(sql.toString());
-							int r2=db.update(sql.toString());
-							if(r2!=-1){
-								sql.insert("ticket(passanger_id, flight_id, flight_date, class_name, worth) "
-									       ,"values ('" + BookingFrame.this.user_id + "', '" + s1 + "', '" + date + "', '" + flight_class + "', '" +tmp.get(0).get(0) + "') ");
+							int r1=db.update(sql.toString());
+							if(r1!=-1){
+								sql.update("flight_class "
+										, " remain = remain - 1 "
+										, " flight_id = '" + s1 + "' and flight_date = cast('" + date +"' as date) and class_name = '" + flight_class.charAt(0) + "' ");
 								System.err.println(sql.toString());
-								int r3=db.update(sql.toString());
-								if(r3!=-1){
-									showDialog("预定成功！请在起飞前打印机票！");
+								int r2=db.update(sql.toString());
+								if(r2!=-1){
+									sql.insert("ticket(passenger_id, flight_id, flight_date, class_name, worth) "
+										       ,"values ('" + BookingFrame.this.user_id + "', '" + s1 + "', '" + date + "', '" + flight_class.charAt(0) + "', '" +tmp.get(0).get(0) + "') ");
+									System.err.println(sql.toString());
+									int r3=db.update(sql.toString());
+									if(r3!=-1){
+										showDialog("预定成功！请在起飞前打印机票！");
+									}else{
+										showDialog("预定失败");
+									}
 								}else{
 									showDialog("预定失败");
 								}
 							}else{
 								showDialog("预定失败");
 							}
-						}else{
-							showDialog("预定失败");
-						}
+						}else {
+						showDialog("请输入正确的航班号");
+					   }
+					}catch(Exception ex){
+						ex.printStackTrace();
+						showDialog("订票失败");
 					}
-				}else {
-					showDialog("请输入正确的航班号");
 				}
 			}
 		});

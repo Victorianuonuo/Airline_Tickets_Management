@@ -14,8 +14,10 @@ public class InfoDialog extends JDialog{
 		super(parent, "Attention");
 		setLayout(new BorderLayout());
 		add(text,BorderLayout.CENTER);
-		pack();
+		setSize(400,150);
+		setVisible(true);
 		setLocationRelativeTo(null);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 	
 	public void setText(String message) {

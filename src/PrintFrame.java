@@ -28,17 +28,18 @@ public class PrintFrame extends JFrame{//打印机票信息界面
 		
 		this.ticket_id=ticket_id;
 		DataBase db=new DataBase();
-		db.update("call getSeat('" + Integer.parseUnsignedInt(ticket_id,36) +"', '" + user + "') ");
+		db.update("call getSeat('" + Integer.parseUnsignedInt(ticket_id) +"', '" + user + "') ");
 		SQL sql=new SQL();
 		sql.select(" company, booking_reference, passenger_name, start_port, end_port, flight_id, class_name, flight_date, start_time, end_time, seat "
-				, " ticket "
-				, " booking_reference = " + Integer.parseUnsignedInt(ticket_id,36)+ " ");
+				, " print_query "
+				, " booking_reference = " + Integer.parseUnsignedInt(ticket_id)+ " ");
 		ArrayList<ArrayList<String>> res=db.query(sql.toString());
 		System.err.println(sql.toString());
+		System.err.println(res);
 		PrintTicket ticket=new PrintTicket(res.get(0));
 		
 		company=ticket.getCompany();
-		ticket_id=ticket.getBooking_reference();
+		//ticket_id=ticket.getBooking_reference();
 		username=ticket.getPassenger_name();
 		flight=ticket.getFlight_id();
 		startpos=ticket.getStart_port();
@@ -47,6 +48,7 @@ public class PrintFrame extends JFrame{//打印机票信息界面
 		endtime=ticket.getEnd_time();
 		date=ticket.getFlight_date();
 		seat=ticket.getSeat();
+		flight_class=ticket.getClass_name();
 		
 		companyPanel=new JPanel();
 		idPanel=new JPanel();
@@ -61,7 +63,7 @@ public class PrintFrame extends JFrame{//打印机票信息界面
 		datePanel=new JPanel();
 		
 		companyLabel=new JLabel(company);
-		idLabel=new JLabel(ticket_id);
+		idLabel=new JLabel(this.ticket_id);
 		userLabel=new JLabel(username);
 		fligtLabel=new JLabel(flight);
 		startposLabel=new JLabel(startpos);
@@ -85,9 +87,9 @@ public class PrintFrame extends JFrame{//打印机票信息界面
 		endposPanel.add(new JLabel("终点： "));
 		endposPanel.add(endposLabel);
 		starttimePanel.add(new JLabel("起始时间： "));
-		starttimePanel.add(startposLabel);
+		starttimePanel.add(starttimeLabel);
 		endtimePanel.add(new JLabel("终止时间： "));
-		endtimePanel.add(endposLabel);
+		endtimePanel.add(endtimeLabel);
 		seatPanel.add(new JLabel("座位： "));
 		seatPanel.add(seatLabel);
 		classPanel.add(new JLabel("舱位： "));
@@ -114,14 +116,16 @@ public class PrintFrame extends JFrame{//打印机票信息界面
 		box.add(idPanel);
 		box.add(userPanel);
 		box.add(datePanel);
+		box.add(idPanel);
 		box.add(startposPanel);
 		box.add(endposPanel);
 		box.add(starttimePanel);
 		box.add(endtimePanel);
 		box.add(classPanel);
-		box.add(seatLabel);
+		box.add(seatPanel);
 		
-		setSize(300,300);
+		
+		setSize(500,600);
 	    setLocationRelativeTo(null);//使界面始终位于屏幕中央
 	    setVisible(true);
 		
