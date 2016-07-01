@@ -59,15 +59,17 @@ public class SignFrame extends JFrame implements CheckString{//注册界面
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				String t1=userField.getText().trim();
-				String t2=pwdField.getPassword().toString().trim();
-				String t3=pwdField2.getPassword().toString().trim();
+				String t2=new String(pwdField.getPassword()).trim();
+				String t3=new String(pwdField2.getPassword()).trim();
 				String t4=idField.getText().trim();
 				String t5=aliasField.getText().trim();
+				System.err.println(t2+"|"+t3+"|"+t4);
 				String user_check=checkS(t1);
 				String pwd_check=checkS(t2);
 				String pwd2_check=checkS(t3);
 				String id_check=checkS(t4);
 				String alias_check=checkS(t5);
+				System.err.println(pwd_check+"|"+pwd2_check+"|"+id_check);
 				if(!pwd_check.equals(pwd2_check)||!t2.equals(t3)||id_check.length()!=18){
 					if(id_check.length()==18)
 					tipLabel.setText("两次密码不一致！");
@@ -80,7 +82,7 @@ public class SignFrame extends JFrame implements CheckString{//注册界面
 						"values ( '" + id_check +"', '" + alias_check + "', '" + pwd_check +"', '" + user_check + "')");
 					DataBase db=new DataBase();
 					int col=db.update(sql.toString());
-					if(col!=0){
+					if(col!=-1){
 						tipLabel.setText("注册成功！");
 					}else{
 						tipLabel.setText("登陆账号已存在，请重新输入登陆账号或直接登录");

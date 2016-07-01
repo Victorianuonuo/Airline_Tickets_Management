@@ -75,12 +75,17 @@ public class LoginFrame extends JFrame implements CheckString{//µÇÂ½½çÃæ
 				// TODO Auto-generated method stub
 				DataBase db=new DataBase();
 				String alias=checkS(userText.getText());
-				String pwd2=checkS(pwdText.getPassword().toString());
+				String pwd2=checkS(new String(pwdText.getPassword()));
+				System.err.println(alias+"|"+pwd2);
 				SQL sql=new SQL();
 				sql.select("*","passenger","passenger_alias = '" + alias +"' and passenger_password = '" + pwd2 +"'");
 				ArrayList<ArrayList<String>> res=db.query(sql.toString());
+				for(ArrayList<String> tmp:res)
+				{
+					System.err.println(tmp.toString());
+				}
 				if(res!=null){
-					if(res.size()==1&&res.get(0).size()==1){
+					if(res.size()==1){
 						String user=res.get(0).get(0);
 						BookingFrame bookingFrame=new BookingFrame(user); 
 		                setVisible(false);
