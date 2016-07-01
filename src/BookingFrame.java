@@ -230,7 +230,7 @@ public class BookingFrame extends JFrame implements CheckString{//≤È—Ø∂©∆±ΩÁ√Ê
 					}else {
 						Flight flight=new Flight(res.get(0));
 						String sql2="update account "+ "set balance = balance - " 
-					         + flight.getPrice() + " "+ "where account_name = '" 
+					         + flight.getPrice(flight_class) + " "+ "where account_name = '" 
 							 + user + "'; ";
 						String sql3="update flight "+ "set " + flight_class + "_left = " 
 							        + flight_class + "_left - 1 "+ "where flight_id = '" 
