@@ -23,12 +23,7 @@ public class PersonalFrame extends JFrame implements CheckString{//个人信息界面
 	private JButton chargeButton;
 	private JTextField charge;
 	private String name;
-	
-	static final String driver="com.mysql.jdbc.Driver";
-    static final String url="jdbc:mysql://localhost:3306/foo";
-    
-    private String dba="root";
-	private String pwd="victoria";
+
 
 	public PersonalFrame(String user) {
 		// TODO Auto-generated constructor stub
@@ -78,7 +73,7 @@ public class PersonalFrame extends JFrame implements CheckString{//个人信息界面
 					String sql="update account "+ "set balance = balance + " 
 					           + s + " "+ "where account_name = '" 
 							   +name+ "'; ";
-					DataBase db=new DataBase(driver, url, dba, pwd);
+					DataBase db=new DataBase();
 					int flag=db.update(sql);
 					if(flag!=0){
 						t=Integer.parseInt(s)+Integer.parseInt(s)+"";

@@ -74,8 +74,5 @@ public class Flight {//用于显示查询时的航班状态
 	public String getStart_time() {
 		return start_time;
 	}
-	public String getFirst_price() {
-		return first_price;
-	}
 	
 }

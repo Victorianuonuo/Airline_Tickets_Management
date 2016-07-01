@@ -12,12 +12,18 @@ public class DataBase {
 	
 	static private Connection connection;
 	
+	private static final String driver="com.mysql.jdbc.Driver";
+    private static final String url="jdbc:mysql://localhost:3306/foo";
+    
+    private static final String username="root";
+	private static final String pwd="victoria";
 	
-	public DataBase(String driver,String url,String username,String password) { //构造方法，连接指定数据库。4个参数分别指定JDBC驱动程序、数据库URL、用户名和口令
+	
+	public DataBase() { //构造方法，连接指定数据库。
 		// TODO Auto-generated constructor stub
 		try {
 			Class.forName(driver);
-			connection=DriverManager.getConnection(url,username,password);
+			connection=DriverManager.getConnection(url,username,pwd);
 			System.err.println("build the connection successfully......");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -63,7 +69,7 @@ public class DataBase {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return 0;
+			return -1;
 		}	 
 	}
 	

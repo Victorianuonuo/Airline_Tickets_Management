@@ -1,6 +1,8 @@
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -11,56 +13,80 @@ import javax.swing.JPanel;
 
 public class PrintFrame extends JFrame{//打印机票信息界面
 	
-	private JPanel idPanel,userPanel,fligtPanel,startPanel,endPanel,classPanel,seatPanel,datePanel;
-	private JLabel idLabel,userLabel,fligtLabel,startLabel,endLabel,classLabel,seatLabel,dateLabel;
-	private String ticket_id,username,flight,start,end,date,flight_class,seat;
+	private JPanel companyPanel,idPanel,userPanel,fligtPanel,startposPanel,endposPanel,starttimePanel,endtimePanel,classPanel,seatPanel,datePanel;
+	private JLabel companyLabel,idLabel,userLabel,fligtLabel,startposLabel,endposLabel,starttimeLabel,endtimeLabel,classLabel,seatLabel,dateLabel;
+	private String company,ticket_id,username,flight,startpos,endpos,starttime,endtime,date,flight_class,seat;
 	private Container container;
 	private Box box;
 	private JButton printButton;
                   
-	public PrintFrame(Ticket ticket) {
+	public PrintFrame(String ticket_id,String user) {
 		// TODO Auto-generated constructor stub
 		super("打印");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setResizable(false);//界面大小不可改变
 		
-		ticket_id=ticket.getTicket_id();
-		username=ticket.getUsername();
-		flight=ticket.getFlight();
-		start=ticket.getStart();
-		end=ticket.getEnd();
-		date=ticket.getDate();
-		flight_class=ticket.getFlight_class();
+		this.ticket_id=ticket_id;
+		DataBase db=new DataBase();
+		db.update("call getSeat('" + Integer.parseUnsignedInt(ticket_id,36) +"', '" + user + "'); ");
+		SQL sql=new SQL();
+		sql.select(" company, booking_reference, passenger_name, start_port, end_port, flight_id, class_name, flight_date, start_time, end_time, seat "
+				, " ticket "
+				, " booking_reference = " + Integer.parseUnsignedInt(ticket_id,36)+ "; ");
+		ArrayList<ArrayList<String>> res=db.query(sql.toString());
+		PrintTicket ticket=new PrintTicket(res.get(0));
+		
+		company=ticket.getCompany();
+		ticket_id=ticket.getBooking_reference();
+		username=ticket.getPassenger_name();
+		flight=ticket.getFlight_id();
+		startpos=ticket.getStart_port();
+		endpos=ticket.getEnd_port();
+		starttime=ticket.getStart_time();
+		endtime=ticket.getEnd_time();
+		date=ticket.getFlight_date();
 		seat=ticket.getSeat();
 		
+		companyPanel=new JPanel();
 		idPanel=new JPanel();
 		userPanel=new JPanel();
 		fligtPanel=new JPanel();
-		startPanel=new JPanel();
-		endPanel=new JPanel();
+		startposPanel=new JPanel();
+		endposPanel=new JPanel();
+		starttimePanel=new JPanel();
+		endtimePanel=new JPanel();
 		classPanel=new JPanel();
 		seatPanel=new JPanel();
 		datePanel=new JPanel();
 		
+		companyLabel=new JLabel(company);
 		idLabel=new JLabel(ticket_id);
 		userLabel=new JLabel(username);
 		fligtLabel=new JLabel(flight);
-		startLabel=new JLabel(start);
-		endLabel=new JLabel(end);
+		startposLabel=new JLabel(startpos);
+		endposLabel=new JLabel(endpos);
+		starttimeLabel=new JLabel(starttime);
+		endtimeLabel=new JLabel(endtime);
 		classLabel=new JLabel(flight_class);
 		seatLabel=new JLabel(seat);
 		dateLabel=new JLabel(date);
 		
+		companyPanel.add(new JLabel("航班公司： "));
+		companyPanel.add(companyLabel);
 		idPanel.add(new JLabel("编号：  "));
 		idPanel.add(idLabel);
 		userPanel.add(new JLabel("用户名： "));
 		userPanel.add(userLabel);
 		fligtPanel.add(new JLabel("航班号： "));
 		fligtPanel.add(fligtLabel);
-		startPanel.add(new JLabel("起始点： "));
-		startPanel.add(startLabel);
-		endPanel.add(new JLabel("终点： "));
-		endPanel.add(endLabel);
+		startposPanel.add(new JLabel("起始点： "));
+		startposPanel.add(startposLabel);
+		endposPanel.add(new JLabel("终点： "));
+		endposPanel.add(endposLabel);
+		starttimePanel.add(new JLabel("起始时间： "));
+		starttimePanel.add(startposLabel);
+		endtimePanel.add(new JLabel("终止时间： "));
+		endtimePanel.add(endposLabel);
 		seatPanel.add(new JLabel("座位： "));
 		seatPanel.add(seatLabel);
 		classPanel.add(new JLabel("舱位： "));
@@ -83,11 +109,14 @@ public class PrintFrame extends JFrame{//打印机票信息界面
 			}
 		});
 		
+		box.add(companyPanel);
 		box.add(idPanel);
 		box.add(userPanel);
 		box.add(datePanel);
-		box.add(startPanel);
-		box.add(endPanel);
+		box.add(startposPanel);
+		box.add(endposPanel);
+		box.add(starttimePanel);
+		box.add(endtimePanel);
 		box.add(classPanel);
 		box.add(seatLabel);
 		

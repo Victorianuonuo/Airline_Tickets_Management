@@ -27,12 +27,6 @@ public class LoginFrame extends JFrame implements CheckString{//登陆界面
 	
 	private Image background;
 	
-	static final String driver="com.mysql.jdbc.Driver";
-    static final String url="jdbc:mysql://localhost:3306/foo";
-    
-    private String username="root";
-	private String pwd="victoria";
-	
 	private JLabel backLabel,userLabel,pwdLabel,tipLabel;
 	private JPanel centerPanel,loginPanel;
 	private JButton loginButton,signButton;
@@ -79,17 +73,21 @@ public class LoginFrame extends JFrame implements CheckString{//登陆界面
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				DataBase db=new DataBase(driver, url, username, pwd);
-				String user=checkS(userText.getText());
+				DataBase db=new DataBase();
+				String alias=checkS(userText.getText());
 				String pwd2=checkS(pwdText.getPassword().toString());
-				String sql="select * "+ "from account "
-						   + "where account_name = '" + user 
-						   +"' and account_password = '" + pwd2 +"'; ";
-				ArrayList<ArrayList<String>> res=db.query(sql);
+				SQL sql=new SQL();
+				sql.select("*","passenger","passenger_alias = '" + alias +"' and passenger_password = '" + pwd2 +"'");
+				ArrayList<ArrayList<String>> res=db.query(sql.toString());
 				if(res!=null){
-					BookingFrame bookingFrame=new BookingFrame(user); 
-	                setVisible(false);
-	                dispose();
+					if(res.size()==1&&res.get(0).size()==1){
+						String user=res.get(0).get(0);
+						BookingFrame bookingFrame=new BookingFrame(user); 
+		                setVisible(false);
+		                dispose();
+					}else {
+						tipLabel.setText("请输入正确的用户名和密码");
+					}
 				}else{
 					tipLabel.setText("请输入正确的用户名和密码");
 				}

@@ -25,6 +25,9 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.xml.crypto.Data;
+import javax.xml.transform.Templates;
+
+import org.omg.CORBA.INITIALIZE;
 
 public class BookingFrame extends JFrame implements CheckString{//查询订票界面
      
@@ -51,19 +54,15 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 	private boolean selected=false;
 	private String date="2016-7-1",flight_class="first";
 	
-	static final String driver="com.mysql.jdbc.Driver";
-    static final String url="jdbc:mysql://localhost:3306/foo";
-    
-    private String username="root";
-	private String pwd="victoria";
 	
-	private String user;
+	
+	private String user_id;
 	
 	
 	public BookingFrame(String user) {
 		// TODO Auto-generated constructor stub
 		super("订票");
-		this.user=user;
+		this.user_id=user;
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLayout(new GridBagLayout());
@@ -93,7 +92,7 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				AllTicketFrame allTicketFrame=new AllTicketFrame();//点击菜单中的订票信息栏时将新建一个AllTicketFrame来显示该用户所订机票的所有信息
+				UnprintedTicketFrame unprintedTicketFrame=new UnprintedTicketFrame(user);//点击菜单中的订票信息栏时将新建一个AllTicketFrame来显示该用户所订机票的所有信息
 			}
 		});
         
@@ -173,15 +172,15 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String sql="";
+				SQL sql=new SQL();
 				if(selected==false){//查询，输入flight-id, date，返回ResultSet
 					String t1=numberText.getText();
 					String safe=checkS(t1);
 					System.err.println(safe);
 					if(safe!=null){
-						sql="select * "+ "from flight_query "
-								   + "where flight_id = '" + t1 
-								   + "' and flight_date = cast '" + date + "' as date; ";
+	     						sql.select("flight_id, flight_date, start_port, end_port, start_time, end_time",
+								"flight_book_query",
+								"flight_id = '" + t1 + "' and flight_date = cast '" + date + "' as date");
 					}
 				}else {//查询，输入起点，重点，date
 					String t1=startText.getText(),t2=endText.getText();
@@ -189,20 +188,29 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 					String s2=checkS(t2);
 					System.err.println(s1+" | "+s2);
 					if(s1!=null&&s2!=null){
-						sql="select * "+ "from flight_query "
-								   + "where start_point = '" + s1
-								   + "' and end_point = '" + s2 + 
-								   "' and flight_date = cast '" + date 
-								   + "' as date; ";
+						sql.select("flight_id, flight_date, start_port, end_port, start_time, end_time",
+								"flight_book_query",
+								"start_port = '" + s1 + "' and end_port = '" + s2 + "' and flight_date = cast '" + date + "' as date");
 					}
 				}
-				DataBase db=new DataBase(driver, url, username, pwd);
-				ArrayList<ArrayList<String>> res=db.query(sql);
+				DataBase db=new DataBase();
+				ArrayList<ArrayList<String>> res=db.query(sql.toString());
 				model.removeAllElements();
 				if(res!=null){
 					for(ArrayList<String> tmp:res){
-						Flight flight=new Flight(tmp);
-						model.addElement(flight);
+						sql.select("price, remain",
+								"class_book_query",
+								"flight_id = '" + tmp.get(0) + "' and flight_date = cast '" + date + "' as date");
+						ArrayList<ArrayList<String>> res2=db.query(sql.toString()+" order by class_name");
+						for(ArrayList<String> tmp3:res2){
+							ArrayList<String> tmp2=new ArrayList<>();
+							for(String tmp4:tmp)
+								tmp2.add(tmp4);
+							for(String tmp5:tmp3)
+								tmp2.add(tmp5);
+							Flight flight=new Flight(tmp2);
+							model.addElement(flight);
+						}
 					}
 				}
 			}
@@ -216,46 +224,42 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 				String t1=idText.getText();
 				String s1=checkS(t1);
 				System.err.println(s1);
-				if(t1!=null){
-					DataBase db=new DataBase(driver, url, user,pwd);
-					String sql1="select " + flight_class + "_price as price "
-							   + "from flight "+ "where flight_id = '" 
-							   + s1 + "' and flight_date = cast '" + date 
-							   +"' as date and " + flight_class + "_left > 0; ";
-					ArrayList<ArrayList<String>> res=db.query(sql1);
-					if(res==null){
-						InfoDialog dialog=new InfoDialog(BookingFrame.this);
-						dialog.setText("没有此次航班!");
-						dialog.setVisible(true);
-					}else {
-						Flight flight=new Flight(res.get(0));
-						String sql2="update account "+ "set balance = balance - " 
-					         + flight.getPrice(flight_class) + " "+ "where account_name = '" 
-							 + user + "'; ";
-						String sql3="update flight "+ "set " + flight_class + "_left = " 
-							        + flight_class + "_left - 1 "+ "where flight_id = '" 
-								    + s1 + "' and flight_date = cast '" + date +"' as date;";
-						String sql4="insert into ticket(booking_reference, passanger_name, flight_id, flight_date, seat_type) "
-							    + "values ('" +" GUID() "+ "', '" + user + "', '" + s1 + "', '" + date + "', '" + flight_class + "'); ";
-//GUID()????????
-						int col1=0,col2=0,col3=0;
-						col1=db.update(sql2);
-						if(col1!=0){
-							col2=db.update(sql3);
-							if(col2!=0){
-								col3=db.update(sql4);
+				if(t1!=null&&s1!=null){
+					SQL sql=new SQL();
+					sql.select("price "
+							, "class_book_query "
+							, "flight_id = '" + s1 + "' and flight_date = cast '" + date +"' as date and class_name = '" + flight_class + "' and remain > 0; ");
+					DataBase db=new DataBase();
+					ArrayList<ArrayList<String>> tmp=db.query(sql.toString());
+					if(tmp!=null){
+	
+						sql.update("passenger "
+								,"set balance = balance - " + tmp.get(0).get(0) + " "
+								,"where passenger_name = '" + s1 + "'; ");
+						int r1=db.update(sql.toString());
+						if(r1!=-1){
+							sql.update("flight_class "
+									, "set remain = remain - 1 "
+									, "where flight_id = '" + s1 + "' and flight_date = cast '" + date +"' as date and class_name = '" + flight_class + "';");
+							int r2=db.update(sql.toString());
+							if(r2!=-1){
+								sql.insert("ticket(passanger_id, flight_id, flight_date, class_name, worth) "
+									       ,"values ('" + BookingFrame.this.user_id + "', '" + s1 + "', '" + date + "', '" + flight_class + "', '" +tmp.get(0).get(0) + "'); ");
+								int r3=db.update(sql.toString());
+								if(r3!=-1){
+									showDialog("预定成功！请在起飞前打印机票！");
+								}else{
+									showDialog("预定失败");
+								}
+							}else{
+								showDialog("预定失败");
 							}
-						}
-						if(col1!=0&&col2!=0&&col3!=0){
-							InfoDialog dialog=new InfoDialog(BookingFrame.this);
-							dialog.setText("预订成功!");
-							dialog.setVisible(true);
 						}else{
-							InfoDialog dialog=new InfoDialog(BookingFrame.this);
-							dialog.setText("预订失败！");
-							dialog.setVisible(true);
+							showDialog("预定失败");
 						}
 					}
+				}else {
+					showDialog("请输入正确的航班号");
 				}
 			}
 		});
@@ -407,5 +411,9 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 	    return s.replaceAll(".*([';]+|(--)+).*", " ").trim();
 	}
 
+	private void showDialog(String text){
+		InfoDialog infoDialog=new InfoDialog(BookingFrame.this);
+		infoDialog.setText(text);
+	}
 	
 }
