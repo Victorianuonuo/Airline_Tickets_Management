@@ -23,7 +23,7 @@ public class Flight {//用于显示查询时的航班状态
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-		return "  航班     "+flight_id+"  从    "+start_point+"  到    "+end_point+" 于   "+flight_date+"  头等舱：   "+first_left+"  价格： "+first_price+"  商务舱：   "+first_left+"  价格： "+first_price+"  经济舱：   "+first_left+"  价格： "+first_price ;
+		return " 航班 "+flight_id+" 从 "+start_point+" 到 "+end_point+" 于 "+flight_date+" 头等舱 "+first_left+" 张 价格： "+first_price+" 商务舱 "+business_left+" 张 价格： "+business_price+" 经济舱  "+economy_left+" 张 价格： "+economy_price ;
 	}
 
 	public String getBusiness_left() {

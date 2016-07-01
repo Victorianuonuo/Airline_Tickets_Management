@@ -8,6 +8,13 @@ public class SQL {
 				+ "from " + table + " "
 				+ "where ( " + cond + " ); ";
 		}
+	   
+	   public void select(String col, String table, String cond,String order)  {
+			s="select " + col + " "
+				+ "from " + table + " "
+				+ "where ( " + cond + " ) "
+				+" order by ( "+order+" ) ; ";
+		}
 		
 	    public void insert(String table, String tuple)  {
 			s="insert into "+ table + " "
@@ -30,4 +37,6 @@ public class SQL {
     	// TODO Auto-generated method stub
     	return s;
         }
+    
+       
 }

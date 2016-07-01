@@ -28,11 +28,11 @@ public class PrintFrame extends JFrame{//打印机票信息界面
 		
 		this.ticket_id=ticket_id;
 		DataBase db=new DataBase();
-		db.update("call getSeat('" + Integer.parseUnsignedInt(ticket_id,36) +"', '" + user + "'); ");
+		db.update("call getSeat('" + Integer.parseUnsignedInt(ticket_id,36) +"', '" + user + "') ");
 		SQL sql=new SQL();
 		sql.select(" company, booking_reference, passenger_name, start_port, end_port, flight_id, class_name, flight_date, start_time, end_time, seat "
 				, " ticket "
-				, " booking_reference = " + Integer.parseUnsignedInt(ticket_id,36)+ "; ");
+				, " booking_reference = " + Integer.parseUnsignedInt(ticket_id,36)+ " ");
 		ArrayList<ArrayList<String>> res=db.query(sql.toString());
 		PrintTicket ticket=new PrintTicket(res.get(0));
 		
