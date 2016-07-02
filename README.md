@@ -1,6 +1,6 @@
 # abstract #
 
-use jdbc and mysql to write a simple airline_tickets_management system in Java
+use jdbc ,java swing and mysql to write a simple airline_tickets_management system in Java
 
 ## special ##
 
