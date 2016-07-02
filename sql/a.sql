@@ -95,4 +95,40 @@ as
 		join route using (flight_id)
         join passenger using (passenger_id)
     );
+	
+	
+	
+	
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getSeat`(in ref int unsigned, in pid varchar(30))
+begin
+	declare fid varchar(8);
+	declare fdate date;
+	declare c char(1);
+    declare r int;
+    declare x int;
+    select flight_id, flight_date, class_name
+    into fid, fdate, c
+    from ticket
+    where booking_reference = ref and passenger_id = pid;
+    if c is null
+    then
+		insert into xxxx value(1,1,1);
+	else
+		select remain
+        into r
+        from flight_class
+        where flight_id = fid and flight_date = fdate and class_name = c;
+		set r = r + 1;
+        update flight_class
+        set remain = r
+        where flight_id = fid and flight_date = fdate and class_name = c;
+        select class_column
+        into x
+        from route join plane_class using (plane_type)
+        where flight_id = fid and class_name = c;
+        update ticket
+        set seat = concat(floor((r-(r%x))/x), '-', conv(r % x + 10, 10, 36))
+        where booking_reference = ref;
+    end if;
+end	
 
