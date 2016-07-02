@@ -1,0 +1,40 @@
+CZ3929,beijing,guangzhou,085837,121702,1,CZ,boeing747,1050
+CZ3930,beijing,guangzhou,050837,150725,1,CZ,boeing747,1566
+CZ3931,beijing,guangzhou,023347,140052,1,CZ,boeing747,1225
+CZ3932,beijing,guangzhou,011529,152034,1,CZ,boeing747,985
+CZ3933,beijing,guangzhou,053127,090909,1,CZ,boeing747,2111
+CZ3934,beijing,guangzhou,045237,111340,1,CZ,boeing747,1957
+CZ3935,beijing,shanghai,060656,145635,1,CZ,boeing747,1322
+CZ3936,beijing,shanghai,003331,164814,1,CZ,boeing747,1496
+CZ3937,beijing,shanghai,050706,143226,1,CZ,airbus340 ,1429
+CZ3938,beijing,shanghai,013310,101319,1,CZ,airbus340 ,1077
+CA1000,beijing,shanghai,010119,111827,1,CA,airbus340 ,1158
+CA1001,beijing,shanghai,001856,135419,1,CA,airbus340 ,1123
+CA1002,shanghai,beijing,004405,160234,1,CA,airbus340 ,1315
+CA1003,shanghai,beijing,062207,135415,1,CA,airbus340 ,1739
+CA1004,shanghai,beijing,003411,130230,1,CA,airbus340 ,1838
+CA1005,shanghai,beijing,012529,140150,1,CA,airbus340 ,1719
+CA1006,shanghai,beijing,082359,102451,1,CA,airbus340 ,1744
+CA1007,shanghai,beijing,060438,151038,1,CA,airbus340 ,1420
+CA1008,shanghai,beijing,022115,174929,1,CA,airbus300 ,1909
+CA1009,shanghai,guangzhou,052458,150026,1,CA,boeing777,1541
+MU0156,shanghai,guangzhou,062848,175338,1,MU,boeing777,1445
+MU0157,shanghai,guangzhou,063257,142009,1,MU,boeing777,1617
+MU0158,shanghai,guangzhou,063320,112712,1,MU,boeing777,1089
+MU0159,shanghai,guangzhou,081106,121423,1,MU,boeing777,1201
+MU0160,shanghai,guangzhou,044348,133352,1,MU,boeing777,1522
+MU0161,guangzhou,beijing,040525,125609,1,MU,boeing777,1188
+MU0162,guangzhou,beijing,031812,094534,1,MU,boeing777,1677
+MU0163,guangzhou,beijing,034159,163838,1,MU,boeing777,1642
+FM0226,guangzhou,beijing,045745,103318,1,FM,airbus300 ,1273
+FM0227,guangzhou,beijing,053633,135049,1,FM,airbus300 ,1698
+FM0228,guangzhou,beijing,031232,101932,1,FM,airbus300 ,1649
+FM0229,guangzhou,beijing,045514,092655,1,FM,airbus300 ,1314
+FM0230,guangzhou,shanghai,002002,165312,1,FM,airbus300 ,1577
+FM0231,guangzhou,shanghai,032404,152801,1,FM,airbus300 ,1431
+FM0232,guangzhou,shanghai,050811,160354,1,FM,airbus300 ,1847
+FM0233,guangzhou,shanghai,035754,161233,1,FM,airbus300 ,1249
+FM0234,guangzhou,shanghai,030931,160612,1,FM,airbus300 ,1117
+FM0235,guangzhou,shanghai,040309,125514,1,FM,airbus300 ,1834
+FM0236,guangzhou,shanghai,044416,144834,1,FM,airbus300 ,1425
+FM0237,guangzhou,shanghai,060102,155801,1,FM,airbus300 ,1643
