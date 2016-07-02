@@ -1,5 +1,9 @@
-import java.awt.BorderLayout;
-import java.awt.Frame;
+package com.victoria.Frame;
+
+import com.victoria.Entity.*;
+import com.victoria.Interface.*;
+import com.victoria.mysql.*;
+
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -7,7 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
-import java.util.Vector;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultListModel;
@@ -21,13 +24,9 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.xml.crypto.Data;
-import javax.xml.transform.Templates;
 
-import org.omg.CORBA.INITIALIZE;
 
 public class BookingFrame extends JFrame implements CheckString{//查询订票界面
      
@@ -101,7 +100,7 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				TeamWokersFrame teamWokersDialog=new TeamWokersFrame();//点击菜单中的关于栏时将新建一个TeamWokersFrame来显示团队信息
+				TeamWorkersFrame teamWokersDialog=new TeamWorkersFrame();//点击菜单中的关于栏时将新建一个TeamWokersFrame来显示团队信息
 			}
 		});
         exitItem.addActionListener(new ActionListener() {
@@ -440,3 +439,4 @@ public class BookingFrame extends JFrame implements CheckString{//查询订票界面
 	}
 	
 }
+

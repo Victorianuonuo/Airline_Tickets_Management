@@ -1,3 +1,5 @@
+package com.victoria.Frame;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -14,6 +16,10 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import com.victoria.Entity.*;
+import com.victoria.mysql.DataBase;
+import com.victoria.mysql.SQL;
 
 public class UnprintedTicketFrame extends JFrame{//显示该用户的所有订单状态
 	

@@ -1,3 +1,5 @@
+package com.victoria.Frame;
+
 import java.awt.BorderLayout;
 import java.awt.Frame;
 
@@ -25,3 +27,4 @@ public class InfoDialog extends JDialog{
 	}
 	
 }
+

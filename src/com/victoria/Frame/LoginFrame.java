@@ -1,3 +1,8 @@
+package com.victoria.Frame;
+
+import com.victoria.Interface.*;
+import com.victoria.mysql.*;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -21,6 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
 
 public class LoginFrame extends JFrame implements CheckString{//µÇÂ½½çÃæ
    

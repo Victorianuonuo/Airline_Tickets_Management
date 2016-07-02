@@ -1,4 +1,5 @@
-import java.io.ObjectInputStream.GetField;
+package com.victoria.Entity;
+
 import java.util.ArrayList;
 
 public class PrintTicket {
@@ -58,3 +59,4 @@ public class PrintTicket {
 	
 	
 }
+

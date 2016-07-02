@@ -1,4 +1,5 @@
-import java.sql.ResultSet;
+package com.victoria.Entity;
+
 import java.util.ArrayList;
 
 public class Flight {//用于显示查询时的航班状态

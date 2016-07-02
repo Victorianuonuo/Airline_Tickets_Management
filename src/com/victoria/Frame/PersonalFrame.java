@@ -1,12 +1,15 @@
-import java.awt.BorderLayout;
+package com.victoria.Frame;
+
+import com.victoria.Entity.*;
+import com.victoria.Interface.*;
+import com.victoria.mysql.*;
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
 import java.util.ArrayList;
 
-import javax.print.DocFlavor.STRING;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -17,6 +20,7 @@ import javax.swing.JTextField;
 
 import com.mysql.fabric.xmlrpc.base.Data;
 import com.mysql.jdbc.DatabaseMetaData;
+
 
 public class PersonalFrame extends JFrame implements CheckString{//个人信息界面
 	
@@ -147,3 +151,4 @@ public class PersonalFrame extends JFrame implements CheckString{//个人信息界面
 
 	
 }
+

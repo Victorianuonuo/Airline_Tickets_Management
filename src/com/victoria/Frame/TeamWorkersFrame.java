@@ -1,3 +1,5 @@
+package com.victoria.Frame;
+
 import java.awt.Container;
 import java.awt.Frame;
 
@@ -8,14 +10,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class TeamWokersFrame extends JFrame{//团队信息界面
+public class TeamWorkersFrame extends JFrame{//团队信息界面
 	
 	private Container container;
 	private Box box;
 	private JLabel teamworkersLabel,aimLabel,nameLabel;
 	private JPanel p1,p2,p3,p4;
 	
-	public TeamWokersFrame() {
+	public TeamWorkersFrame() {
 		// TODO Auto-generated constructor stub
 		super("关于");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);

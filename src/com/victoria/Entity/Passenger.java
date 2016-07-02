@@ -1,3 +1,5 @@
+package com.victoria.Entity;
+
 import java.util.ArrayList;
 
 public class Passenger {
@@ -26,3 +28,4 @@ public class Passenger {
 	}
 	
 }
+

@@ -1,7 +1,10 @@
+package com.victoria.Frame;
+import com.victoria.Entity.*;
+import com.victoria.mysql.*;
+
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import javax.swing.Box;

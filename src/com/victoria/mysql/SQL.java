@@ -1,3 +1,5 @@
+package com.victoria.mysql;
+
 
 public class SQL {
 	

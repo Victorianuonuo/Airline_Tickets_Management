@@ -1,3 +1,10 @@
+package com.victoria.Frame;
+
+
+import com.victoria.Interface.*;
+import com.victoria.mysql.*;
+
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -132,3 +139,4 @@ public class SignFrame extends JFrame implements CheckString{//×¢²á½çÃæ
 
 	
 }
+
